@@ -21,6 +21,7 @@ url: "" # the base hostname & protocol for your site, e.g. http://example.com
 # twitter_username: jekyllrb
 github_username:  zelivans
 repository: zelivans/zelivans.github.io
+google_analytics: UA-92166259-1
 
 # Build settings
 markdown: kramdown
