@@ -135,6 +135,8 @@ The latter is also possible when a gif image or a tga image is placed after the 
 ## What is affected?
 There are many Linux user space applications that rely on gdk-pixbuf to load and display images. This also affects desktop managers themselves (the obvious is Gnome) and some file managers. To see the full list of programs affected run `apt-cache rdepends libgdk-pixbuf2.0-0 libgdk-pixbuf2.0-dev`  (on apt based distributions). I originally intended adding a demonstration of using one of these bugs maliciously, but I decided to leave that out for now.
 
+I also found out these bugs can crash both Firefox and Chromium by trying to load a bad file from their file manager.
+
 ## Until next time
 In my next post I will probably write about libwmf. This is another widely used library and I've already found some vulnerabilities in it. In the meantime I reccomend simply disabling it.
 
