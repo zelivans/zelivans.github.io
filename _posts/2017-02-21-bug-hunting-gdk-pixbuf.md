@@ -3,7 +3,9 @@ layout: post
 title:  Bug hunting GDK-PixBuf
 ---
 
-GDK-PixBuf is an image loading library, mainly used by GTK+. It was originally a part of [GDK](https://en.wikipedia.org/wiki/GDK) but it was split up to [it's own repository](https://git.gnome.org/browse/gdk-pixbuf/).
+GDK-PixBuf is an image loading library, mainly used by GTK+. It was originally a part of [GDK](https://en.wikipedia.org/wiki/GDK) but it was split up to [it's own repository](https://git.gnome.org/browse/gdk-pixbuf/). I've found multiple vulnerabilities in it that I had reserved CVE IDs for given it's widespread use.
+
+If you are reading this merely for the for the explanations of the bugs feel free to skip the following introduction (or go read the bug tickets).
 
 ## A little on fuzzing
 I recently had some time to read about a great deal of security vulnerabilities and other bugs found with fuzzing, and it occurred to me to try and fuzz some libraries and applications I use regularly on my Linux machine. After a while I got to gdk-pixbuf. It is a great fuzzing target, because it is both a widely used library and it deals with various types of inputs.
@@ -20,10 +22,12 @@ The best way to compile Gnome projects from trunk is with [JHbuild](https://deve
 
 There are some other steps I did before actually starting afl with the binary, but as this is getting long already, I won't elaborate. If you are interested in using optimizing and afl though, read [this post about afl](https://foxglovesecurity.com/2016/03/15/fuzzing-workflows-a-fuzz-job-from-start-to-finish/).
 
-## First bug
-A crash! and another! Not a second passed before afl found 4 unique crashes. A quick investigation with gdb revealed there was a bug in the gnome-thumbnailer-skeleton.c file in the main function. It would try and print `error->message` when error was not set (it was NULL). In other words, it tried to print whatever was in address 0x8. As far as I know, this is harmless on a user space program such as this. But it's definitely a problem, so [I filed a bug](https://bugzilla.gnome.org/show_bug.cgi?id=778204).
+## First bug (CVE-2017-6311)
+A crash! and another! Not a second passed before afl found 4 unique crashes. A quick investigation with gdb revealed there was a bug in the gnome-thumbnailer-skeleton.c file in the main function. It would try and print `error->message` when `error` was not set (it was NULL). This would translate to printing whatever is in address 0x8. 
 
-## First interesting bug
+This should generally lead to a crash and nothing beyond that, at least on a user space program. But it's definitely a problem, so [I filed a bug](https://bugzilla.gnome.org/show_bug.cgi?id=778204) and it was eventually assigned a CVE ID by MITRE among the other bugs.
+
+## An optimization driven bug (CVE-2017-6312)
 I let afl run for a while until it found a new unique crash. It was a segmentation fault. I examined it with gdb:
 
 {% highlight plaintext %}
@@ -67,7 +71,7 @@ I tested this on Arch Linux and later on Ubuntu 16.04.1 and it crashed eog and n
 
 [Link to bug report](https://bugzilla.gnome.org/show_bug.cgi?id=779012)
 
-## Finding more bugs
+## Finding more bugs (CVE-2017-6313)
 With afl running in the background, I started roughly reviewing the code manually. After some playing around with the loaders I found a bug in io-icns.c, the loader for Macintosh icons. There is a possible integer overflow in the size variable that is used later in a call to `gdk_pixbuf_loader_write`. This function is the general loading function, it finds the correct loader and calls it to decode the image in the buffer given to it. Let's take a look at it's signature:
 
 {% highlight c %}
@@ -109,7 +113,7 @@ A malicious file would start like this:
 
 From a quick trial and error of this flaw with different image types I've found two out out-of-bounds reads. Both io-bmp.c and io-ico.c (which is actually based on io-bmp.c), when given a big count, continue to read from buf beyond it's real size, resulting in a segmentation fault.
 
-## Infinite loop
+## Infinite loop (CVE-2017-6314)
 Another interesting behavior is when trying the icns bug with a tiff image. It would hang, indefinitely. After digging into io-tiff.c, I found the culprit. The `make_available_at_least` function is called to allocate a buffer as large as the size we give it. Let's take a look on few lines this function:
 
 {% highlight c %}
