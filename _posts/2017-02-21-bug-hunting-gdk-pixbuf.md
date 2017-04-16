@@ -142,7 +142,7 @@ There are many Linux user space applications that rely on gdk-pixbuf to load and
 I also found out these bugs can crash both Firefox and Chromium by trying to load a bad file from their file manager.
 
 ## Until next time
-In my next post I will probably write about libwmf. This is another widely used library and I've already found some vulnerabilities in it. In the meantime I reccomend simply disabling it.
+I thought about writing another post on libwmf, but I eventually reconsidered it. libwmf is another widely used library in which I've found some vulnerabilities. I reccomend disabling it if it is enabled in your distribution.
 
 [^evince]: CVE-2010-2640, CVE-2010-2641, CVE-2010-2642, CVE-2010-2643
 [^afl-clang-fast]: afl-2.39b/llvm_mode/README.llvm
