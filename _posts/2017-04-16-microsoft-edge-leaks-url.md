@@ -39,7 +39,9 @@ I've tested the PoC on Microsoft Edge 40.15063.0.0 (slow ring) and on Microsoft 
 + 27.3.2017 - Sent report and PoC to MSRC (Microsoft Security Response Center)
 + 27.3.2017 - MSRC opened a case for the issue
 + 7.4.2017 - MSRC have determined this is not a security issue
++ 13.4.2017 - Following some other emails I made sure it is OK by MSRC to publish this.
 
+The response:
 > Hello Ariel,
 >
 > We have determined that this does not met the bar for security servicing through a security bulletin as the only information disclosed is the URL, which should not contain sensitive data. The product team has opened a tracking item to address this in a future version update.
@@ -49,8 +51,3 @@ I've tested the PoC on Microsoft Edge 40.15063.0.0 (slow ring) and on Microsoft 
 > Cheers,
 >
 > \-
-
-+ 13.4.2017 - Following some other emails I made sure it is OK by MSRC to publish this.
-
-Additionally, I don't know if related or not, on 1.4.2017, Microsoft sent the following email:
-![docs.com email](/assets/docs.com.PNG)
