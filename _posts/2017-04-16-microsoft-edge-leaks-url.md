@@ -4,7 +4,7 @@ title:  Attacking Microsoft Edge to identify users by leaking URLs from Fetch re
 ---
 
 ## TL;DR
-I found that Microsoft Edge exposes the URL of any Fetch response, in contradiction to the specification. I prove this is a problem by showing it is possible to identify users by crafting a Fetch request to a URL that will redirect to a URL with the user's username (e.g. https://facebook.com/me to https://facebook.com/username). This may in some cases obsolete identification by IP or browser fingerprinting.
+I found that Microsoft Edge exposes the URL of any JavaScript Fetch response, in contradiction to the [specification](https://fetch.spec.whatwg.org/). This is a problem because it is possible to identify users by crafting a Fetch request in a webpage that will redirect to a URL containing the visitor's username (e.g. requesting https://facebook.com/me will result in https://facebook.com/username). This may in some cases obsolete identification by IP or browser fingerprinting.
 
 ## Introduction
 
@@ -16,7 +16,7 @@ Please make yourself familiar with [Fetch](https://developer.mozilla.org/en-US/d
 
 ## The Issue
 
-By default, requests made with fetch respect [CORS](https://developer.mozilla.org/en-US/docs/Web/HTTP/Access_control_CORS) and deny access to inappropriate resources. It is possible however to make a request with "no-cors" mode, enabling fetch to bypass CORS. The response of such a request should be "opaque", meaning it's content should be empty (so that an attacker could not gain access to cross-origin requests made with the user's session). [The specification](https://fetch.spec.whatwg.org/) states the following:
+By default, requests made with fetch should respect [CORS](https://developer.mozilla.org/en-US/docs/Web/HTTP/Access_control_CORS) and deny access to inappropriate resources. However, it is possible to make a request with "no-cors" mode, enabling fetch to bypass CORS. The response of such a request should be "opaque", meaning it's content should be empty (so that an attacker could not gain access to cross-origin requests made with the user's session). [The specification](https://fetch.spec.whatwg.org/) states the following:
 
 > An opaque filtered response is a filtered response whose type is "opaque", url list is the empty list, status is 0, status message is the empty byte sequence, header list is empty, body is null, and trailer is empty.
 
