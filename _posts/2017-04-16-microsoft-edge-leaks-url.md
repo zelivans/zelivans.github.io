@@ -4,7 +4,7 @@ title:  Attacking Microsoft Edge to identify users by leaking URLs from Fetch re
 ---
 
 ## TL;DR
-I found that Microsoft Edge exposes the URL of any JavaScript Fetch response, in contradiction to the [specification](https://fetch.spec.whatwg.org/). This is a problem because it is possible to identify users by crafting a Fetch request in a webpage that will redirect to a URL containing the visitor's username (e.g. requesting https://facebook.com/me will result in https://facebook.com/username). This may in some cases obsolete identification by IP or browser fingerprinting.
+I found that Microsoft Edge exposes the URL of any JavaScript Fetch response, in contradiction to the [specification](https://fetch.spec.whatwg.org/). This is a problem because it is possible to identify users by crafting a Fetch request in a webpage that will redirect to a URL containing the visitor's username (e.g. requesting https://facebook.com/me will result in https://facebook.com/username). This may obsolete identification by IP or browser fingerprinting.
 
 ## Introduction
 
@@ -39,7 +39,7 @@ I've tested the PoC on Microsoft Edge 40.15063.0.0 (slow ring) and on Microsoft 
 + 27.3.2017 - Sent report and PoC to MSRC (Microsoft Security Response Center)
 + 27.3.2017 - MSRC opened a case for the issue
 + 7.4.2017 - MSRC have determined this is not a security issue
-+ 13.4.2017 - Following some other emails I made sure it is OK by MSRC to publish this.
++ 13.4.2017 - Following some other emails I made sure it is OK by MSRC to publish this
 
 The response:
 > Hello Ariel,
@@ -50,4 +50,14 @@ The response:
 >
 > Cheers,
 >
-> \-
+> --
+
+**Update (24.4.2017):** I've reached MSRC once again after this post became popular [on Reddit](https://www.reddit.com/r/netsec/comments/65ucsn/attacking_microsoft_edge_to_identify_users_by/) and social media. Their response clarified that they do treat this as a security issue and assured a patch is to come soon:
+
+> Hi Ariel,
+>
+> We have always considered this a security issue, it just did not meet our bar for security servicing through a bulletin and would be addressed with a next version fix. The product team is considering moving up their timeline to the June Patch Tuesday release for this. As we get closer to this date I will be able to provide you more details regarding the fix and how it will be shipping. Currently because they are targeting a Patch Tuesday release, we will be assigning a CVE as well as providing acknowledgement for the report since you followed CVD, which we do greatly appreciate.
+>
+> Cheers,
+>
+> --
