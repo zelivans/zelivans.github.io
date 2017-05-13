@@ -28,7 +28,7 @@ Some real life examples used in the PoC are https://facebook.com/me, https://you
 
 ## Proof of Concept
 
-[Test your browser](/poc-fetch) or [see the GitHub project](https://github.com/zelivans/poc-fetch) (run poc_facebook.py for the Facebook example).
+[Test your browser](/poc-fetch) or [see the GitHub project](https://github.com/zelivans/poc-fetch) (run poc_facebook.py for the Facebook example)
 
 I originally tried to find a Microsoft service that the issue applies to, so the first PoC targets [https://docs.com](https://docs.com). I later modified it a little to target Facebook. The simpler version only proves the URL leak happens with Docs, Facebook and Youtube. Anyhow, the effect is that without any user interaction or consent the user's identity is leaked to the attacker's website.
 
