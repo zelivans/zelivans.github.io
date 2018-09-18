@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  Attacking Microsoft Edge to identify users by leaking URLs from Fetch requests
+title: Attacking Microsoft Edge to identify users by leaking URLs from Fetch requests
 ---
 
 ## TL;DR
@@ -40,24 +40,8 @@ I've tested the PoC on Microsoft Edge 40.15063.0.0 (slow ring) and on Microsoft 
 + 27.3.2017 - MSRC opened a case for the issue
 + 7.4.2017 - MSRC have determined this is not a security issue
 + 13.4.2017 - Following some other emails I made sure it is OK by MSRC to publish this
++ 6.7.2017 - MSRC had assigned CVE-2017-8504 for this issue and a patch was released in the 6/13 Patch Tuesday
 
-The response:
-> Hello Ariel,
->
-> We have determined that this does not met the bar for security servicing through a security bulletin as the only information disclosed is the URL, which should not contain sensitive data. The product team has opened a tracking item to address this in a future version update.
->
-> We appreciate your report. If you have any additional concerns or questions, please let me know.
->
-> Cheers,
->
-> --
+**Update (24.4.2017):** I've reached MSRC once again after this post became popular [on Reddit](https://www.reddit.com/r/netsec/comments/65ucsn/attacking_microsoft_edge_to_identify_users_by/) and social media. Their response clarified that they do treat this as a security issue and assured a patch is to come soon.
 
-**Update (24.4.2017):** I've reached MSRC once again after this post became popular [on Reddit](https://www.reddit.com/r/netsec/comments/65ucsn/attacking_microsoft_edge_to_identify_users_by/) and social media. Their response clarified that they do treat this as a security issue and assured a patch is to come soon:
-
-> Hi Ariel,
->
-> We have always considered this a security issue, it just did not meet our bar for security servicing through a bulletin and would be addressed with a next version fix. The product team is considering moving up their timeline to the June Patch Tuesday release for this. As we get closer to this date I will be able to provide you more details regarding the fix and how it will be shipping. Currently because they are targeting a Patch Tuesday release, we will be assigning a CVE as well as providing acknowledgement for the report since you followed CVD, which we do greatly appreciate.
->
-> Cheers,
->
-> --
+**Final update:** Jonathan from MSRC had assigned a CVE for this issue attributed to me in their [acknowledgement page](https://portal.msrc.microsoft.com/en-us/security-guidance/acknowledgments).
