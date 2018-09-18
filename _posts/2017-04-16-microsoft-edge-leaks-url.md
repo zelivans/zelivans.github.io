@@ -1,5 +1,6 @@
 ---
 layout: post
+hidden: true
 title: Attacking Microsoft Edge to identify users by leaking URLs from Fetch requests
 ---
 
